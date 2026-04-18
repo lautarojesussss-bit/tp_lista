@@ -1,77 +1,69 @@
 #include "pa2m.h"
 #include <stdio.h>
+#include "../src/lista.h"
 
-/**
- * DISCLAIMER:
- * - Esto es un ejemplo, este código no debe ser parte del archivo definitivo al 
- *   momento de la entrega final.
- * - Las funciones que se prueban (ej. sumar, es_par) se deben implementar
- *   en los archivos de código correspondientes (por ejemplo, lista.c), no 
- *   dentro de los archivos de pruebas.
- * - En este ejemplo se incluyen funciones mínimas implementadas (sumar(), las 
- *   demás son funciones necesarias para pruebas) solo para que el ejemplo 
- *   compile y se entienda la estructura de las pruebas.
- * - Para ver algo un poco más completo, revisar el template de ejemplo de 
- *   tests.
- */
 
-int sumar(int a, int b)
+void prueba_lista_insertar_NULL()
 {
-	return a + b;
+        lista_t *lista = lista_crear();
+        pa2m_afirmar(lista_insertar(lista, NULL), "Insertar un elemento NULL a una lista.");
+        lista_destruir(lista);
 }
 
-/**
- * Pruebas de suma
- */
-
-void prueba_sumar_positivos()
+void prueba_lista_destruir_todo_NULL()
 {
-	// Inicialización
-	int primer_sumando = 1, segundo_sumando = 2;
-	int resultado = sumar(primer_sumando, segundo_sumando);
+        int elemento = 1;
+        lista_t* lista = lista_crear();
+        lista_insertar(lista, &elemento);
 
-	// Afirmación
-	pa2m_afirmar(resultado == 3, "La suma de %i y %i es %i", primer_sumando,
-		     segundo_sumando, resultado);
+        lista_destruir_todo(lista, NULL);
 
-	// Destrucción (si es necesario)
+        pa2m_afirmar(true, "Se elimina una lista sin usar un destructor y no hay error.");
 }
 
-void prueba_sumar_con_numeros_negativos()
+void prueba_lista_obtener_sin_eliminar()
 {
-	// Inicialización
-	int primer_sumando = -5, segundo_sumando = -3,
-	    primer_resultado_esperado = -8;
-	int tercer_sumando = -1, cuarto_sumando = 7,
-	    segundo_resultado_esperado = 6;
+        int elemento = 1;
+        lista_t *lista = lista_crear();
+        lista_insertar(lista, &elemento);
 
-	int primer_resultado = sumar(primer_sumando, segundo_sumando);
-	int segundo_resultado = sumar(tercer_sumando, cuarto_sumando);
+        lista_obtener(lista);
 
-	// Afirmación
-	pa2m_afirmar(
-		primer_resultado == primer_resultado_esperado,
-		"La suma de dos números negativos es correcta (obtenido = %d; esperado = %d)",
-		primer_resultado, primer_resultado_esperado);
-
-	pa2m_afirmar(
-		segundo_resultado == segundo_resultado_esperado,
-		"La suma de un número negativo y un número positivo es correcta (%d = %d)",
-		segundo_resultado, segundo_resultado_esperado);
-
-	// Destrucción (si es necesario)
+        pa2m_afirmar(lista_cantidad(lista) == 1, "Se obtiene un elemento de una lista con lista_obtener sin que este se elimine de la lista.");
 }
 
-void pruebas_unitarias_sumar()
+int comparar_enteros(const void *puntero_A, const void *puntero_B)
 {
-	prueba_sumar_positivos();
+        if (!puntero_A && !puntero_B)
+                return 0;
 
-	prueba_sumar_con_numeros_negativos();
+        if (!puntero_A)
+                return -1;
+
+        if (!puntero_B)
+                return 1;
+
+        int *entero_A = (int*)puntero_A;
+        int *entero_B = (int*)puntero_B;
+
+        if (*entero_A < *entero_B)
+                return -1;
+
+        if (*entero_A > *entero_B )
+                return 1;
+
+        return 0;
 }
 
-/**
- * Main: Conjunto de grupos de pruebas
- */
+void prueba_buscar_posicion_NULL()
+{
+        int elemento = 1;
+        lista_t *lista = lista_crear();
+        lista_insertar(lista, &elemento);
+        
+        lista_buscar(lista, &elemento, comparar_enteros, NULL);
+}
+
 
 int main()
 {
