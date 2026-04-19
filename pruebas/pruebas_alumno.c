@@ -82,6 +82,109 @@ void prueba_buscar_posicion_elemento_repetido()
         lista_destruir(lista);
 }
 
+bool funcion_false(void *ptr1, void *ptr2)
+{
+        return false;
+}
+
+void prueba_lista_con_cada_elemento_false()
+{
+        int elemento = 1;
+        lista_t *lista = lista_crear();
+        lista_insertar(lista, &elemento);
+        
+        size_t cant_evaluada = lista_con_cada_elemento(lista, funcion_false, NULL);
+
+        pa2m_afirmar(cant_evaluada == 1, "Se devuelve la cantidad correcta de elementos evaluados cuando se devuelve siempre false y se paso un extra NULL.");
+        lista_destruir(lista);       
+}
+
+void prueba_iterador_colgante()
+{
+        lista_t *lista = lista_crear();
+        lista_iterador_t *iterador = lista_iterador_crear(lista);
+        void* elemento_actual = lista_iterador_actual(iterador);
+
+        pa2m_afirmar(!elemento_actual, "Se puede pedirle el elemento actual a un iterador de una lista vacia sin que se rompa nada.");
+        lista_destruir(lista);
+        lista_iterador_destruir(iterador);
+}
+
+void prueba_iterador_colgante()
+{
+        int elemento = 1;
+        lista_t *lista = lista_crear();
+        lista_insertar(lista, &elemento);        
+        lista_iterador_t *iterador = lista_iterador_crear(lista);
+        lista_iterador_destruir(iterador);
+        int *elemento_recuerado = lista_obtener(lista);
+
+        pa2m_afirmar(elemento == *elemento_recuerado, "Se puede destruir el iterador de una lista sin que esta deje de funcionar.");
+        lista_destruir(lista);
+}
+
+
+void prueba_iterador_actualizado()
+{
+        lista_t *lista = lista_crear();
+        lista_iterador_t *iterador = lista_iterador_crear(lista);
+        bool primer_chequeo = lista_iterador_hay_mas_elementos(iterador);
+        int elemento = 1;
+        lista_insertar(lista, &elemento);
+        bool segundo_chequeo = lista_iterador_hay_mas_elementos(iterador);        
+
+        pa2m_afirmar(primer_chequeo != segundo_chequeo, "Se puede cambiar la lista y que el iterador responda a esos cambios.");
+        lista_destruir(lista);
+        lista_iterador_destruir(iterador);
+}
+
+void prueba_iterador_colgante()
+{
+        lista_t *lista = lista_crear();        
+        lista_iterador_t *iterador = lista_iterador_crear(lista);
+
+        lista_iterador_avanzar(iterador);
+        pa2m_afirmar(true, "Se puede intentar avanzar en un iterador de una lista vacía sin que se rompa nada.");
+        lista_destruir(lista);
+        lista_iterador_destruir(iterador);
+}
+
+void prueba_iterador_colgante()
+{
+        lista_t *lista = lista_crear();        
+        lista_iterador_t *iterador = lista_iterador_crear(lista);
+
+        lista_destruir(lista);
+        lista_iterador_destruir(lista);
+        pa2m_afirmar(true, "Se puede destruir primero la lista y luego el iterador sin que se rompa nada.");
+}
+
+void prueba_iterador_hay_mas_elementos_lista_vacia()
+{
+        lista_t *lista = lista_crear();        
+        lista_iterador_t *iterador = lista_iterador_crear(lista);
+
+        bool hay_mas_elementos = lista_iterador_hay_mas_elementos(iterador);
+
+        pa2m_afirmar(!hay_mas_elementos, "Se puede crear un iterador a partir de una lista vacía y si preguntamos si tiene elementos nos de false.");
+        lista_iterador_destruir(lista);
+        lista_destruir(lista);  
+}
+
+void prueba_iterador_hay_mas_elementos_NULL()
+{
+        lista_t *lista = lista_crear();
+        lista_insertar(lista, NULL);
+        
+        lista_iterador_t *iterador = lista_iterador_crear(lista);
+
+        bool hay_mas_elementos = lista_iterador_hay_mas_elementos(iterador);
+
+        pa2m_afirmar(hay_mas_elementos, "Se comunica que si hay elementos cuando usamos la función con una lista que tiene 1 elemento NULL.");
+        lista_iterador_destruir(lista);
+        lista_destruir(lista);  
+}
+
 
 int main()
 {
