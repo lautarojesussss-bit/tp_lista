@@ -9,9 +9,9 @@
 
 ## Información del estudiante
 
-* (Nombre y Apellido)
-* (Padrón)
-* (Mail)
+* Lautaro Jesús Duarte Vera
+* 114088
+* lautarojesussss@gmail.com
 
 ---
 
