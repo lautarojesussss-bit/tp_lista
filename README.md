@@ -4,9 +4,6 @@
 
 # TP
 
-> [!IMPORTANT]
-> Esto es una plantilla del informe donde cada sección está delimitada por su título. Se recomienda mantener las secciones y tomar los ejemplos de las mismas para hacer el informe. El contenido de las secciones y comentarios como este deben ser eliminados del informe presentado.
-
 ## Información del estudiante
 
 * Lautaro Jesús Duarte Vera
@@ -14,9 +11,6 @@
 * lautarojesussss@gmail.com
 
 ---
-
-> [!WARNING]
-> Tener en cuenta que el informe se solicita en el ámbito universitario; el texto debe ser coherente, gramatical y ortográficamente correcto y con vocabulario adecuado para dicho contexto.
 
 ## Índice
 * [1. Instrucciones](#1-Instrucciones)
@@ -37,17 +31,17 @@
 
 ### 1.1. Compilar el proyecto
 ```bash
-comando
+make
 ```
 
 ### 1.2. Ejecutar las pruebas
 ```bash
-comando
+make run
 ```
 
 ### 1.3. Ejecutar el programa con Valgrind
 ```bash
-comando
+make valgrind
 ```
 
 ## 2. Funcionamiento

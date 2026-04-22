@@ -4,9 +4,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-typedef struct lista lista_t; 
+typedef struct lista lista_t;
 typedef struct lista_iterador lista_iterador_t;
-
 
 /**
  * Crea un lista vacía.
