@@ -10,18 +10,17 @@ struct cola {
  */
 cola_t *cola_crear()
 {
-	lista_t *lista = lista_crear();
-
-	if (!lista)
+	cola_t *cola = malloc(sizeof(cola_t));
+	if (!cola)
 		return NULL;
 
-	cola_t *cola = malloc(sizeof(cola_t));
-	if (!cola) {
-		free(lista);
+	cola->lista = lista_crear();
+
+	if (!cola->lista) {
+		free(cola);
 		return NULL;
 	}
 
-	cola->lista = lista;
 	return cola;
 }
 
@@ -30,7 +29,7 @@ cola_t *cola_crear()
  */
 cola_t *cola_encolar(cola_t *cola, void *elemento)
 {
-	if (!cola || !(cola->lista))
+	if (!cola)
 		return NULL;
 
 	if (!lista_insertar(cola->lista, elemento))
@@ -44,12 +43,10 @@ cola_t *cola_encolar(cola_t *cola, void *elemento)
  */
 void *cola_desencolar(cola_t *cola)
 {
-	if (!cola || !(cola->lista))
+	if (!cola)
 		return NULL;
 
-	void *elemento = lista_eliminar_posicion(cola->lista, 0);
-
-	return elemento;
+	return lista_eliminar_posicion(cola->lista, 0);
 }
 
 /**
