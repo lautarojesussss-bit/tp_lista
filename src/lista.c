@@ -248,7 +248,7 @@ bool lista_iterador_hay_mas_elementos(lista_iterador_t *it)
 
 void lista_iterador_avanzar(lista_iterador_t *it)
 {
-	if (!it || !lista_iterador_hay_mas_elementos(it))
+	if (!it || !it->nodo_actual)
 		return;
 
 	it->nodo_actual = it->nodo_actual->siguiente;
@@ -256,7 +256,7 @@ void lista_iterador_avanzar(lista_iterador_t *it)
 
 void *lista_iterador_actual(lista_iterador_t *it)
 {
-	if (!it || !lista_iterador_hay_mas_elementos(it))
+	if (!it || !it->nodo_actual)
 		return NULL;
 
 	return it->nodo_actual->elemento;

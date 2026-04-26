@@ -298,23 +298,52 @@ A continuación se detallan las complejidades de todas las primitivas del TDA `C
 |      `cola_destruir`       |  $O(n)$ |Se utiliza la función `lista_destruir` con la lista interna de la cola, esa función tiene una complejidad temporal lineal respecto al número de elementos. Y lo demás que se realiza en la función se resume a un free, que se realiza en tiempo constante. Por esto la complejidad temporal de la operación es lineal.|
 |      `cola_destruir_todo`       |  $O(N \cdot O(destructor))$  |Se utiliza la función `lista_destruir_todo` con la lista interna de la cola, y con el destructor recibido. Dado que la función `lista_destruir_todo` tiene una complejidad que es como lineal, y que depende de la complejidad del destructor, y dado que en la operación `cola_destruir_todo` todo lo demás se resume a un free, que se realiza en tiempo constante, la operación en su totalidad queda expresada como la complejidad temporal de `lista_destruir_todo`.|
 
+## 4. Decisiones de diseño y/o complejidades de implementación 
 
-## 4. Decisiones de diseño y/o complejidades de implementación
-Explicar las decisiones de diseño y/o las complejidades de implementación que hubo durante la resolución del TP.
+### 4.1 Extremo 'activo' de la pila
+Se decidió usar como extremo 'activo' de la pila al extremo inicial de la lista interna de la pila, dado que así se puede cumplir con la reestricción de que la operación `pila_desapilar` se haga en tiempo constante.
 
-## 4. Decisiones de diseño y/o complejidades de implementación (EJEMPLO)
-La mayor complejidad en el TP se encuentra en la función `foo` que requiere hacer...; es por esto que decidí.... Además, decidí que el programa haga... para mejorar la implementación.
+### 4.2 Reutilización de código
+Se decidió reciclar el código en algunas partes de la implementación de las primitivas de `lista_t`, principalmente en las operaciones `lista_eliminar` y `lista_destruir` que representan casos particulares de las operaciones `lista_eliminar_posicion` y `lista_destruir_todo`.
 
-## 5. Respuestas a las preguntas teóricas
-Deberás incluir en esta sección las respuestas a las preguntas teóricas indicadas en el [enunciado](./ENUNCIADO.md) del TP.
+### 4.3 Avisos de errores (main)
+Se decidió utilizar enums y prints personalizados para manejar los principales casos de errores del programa de la calculadora con notación polaca inversa.
 
-## 5. Respuestas a las preguntas teóricas (EJEMPLO)
 
-### 5.1. ¿Porqué...?
-Respondido en su respectiva sección.
+## 5. Respuestas a las preguntas teóricas 
 
-### 5.2 ¿Cómo...?
-Para implementar el....
+### 5.1. Explicar qué es una lista, lista enlazada y lista doblemente enlazada.
+La `lista` es un conjunto TDAs, es muy famoso y muy utilizado en la industria del software, y los TDAs que lo poseen las siguientes caracteristicas (entiendase estas como el contrato básico de una lista):
 
-### 5.3 ¿Cuál fue el...?
+1) Una clasificación elemental de los datos en "posiciones", que se asumen con un orden secuencial, es decir, la posición 0 está detrás de la 1, la 1 detrás de la 2... (los extremos, la primer y última posición, pueden no tener una posición anterior y siguiente, respectivamente). 
+
+2) Una Inserción, eliminación y lectura/acceso arbitrarios, es decir, que se puede hacer estas operaciones en cualquier posición válida de la lista.
+
+La `lista_enlazada` es un subconjunto del conjunto `lista`, estos TDAs, además de cumplir con el 'contrato' ya mencionado, deben hacerlo de una forma particular, mediante 'pedazos' individuales de memoria (llamados nodos) que contienen un elemento y una referencia a otro nodo. De esta forma la información total de la lista no está almacenada en un bloque contiguo de la memoria sina dispersa entre diferentes pedazos de memoria que están 'unidos' mediante referencias.
+
+La `lista_doblemente_enlazada` es un subconjunto del conjunto `lista_enlazada`, cumple todo lo anterior mencionado, y además consta de una caracteristica especial respecto a la cantidad de referencias que posee cada nodo. En la `lista_doblemente_enlazada` cada nodo debe contar, por lo mínimo, con una referencia al nodo anterior y una referencia al nodo siguiente. Este detalle garantiza que se pueda iterar entre los elementos (mediante sus nodos) en dos direcciones dentro de la lista.
+
+Cabe aclarar que dado que la relación que existe entre estos conjuntos es de inclusión estricta, hacer una comparación de ventajas y desventajas resulta inconducente. Al ser el conjunto `lista` el que posee todos los TDAs de los otros dos conjuntos más muchos otros, es este el que posee todas las ventajas teóricas (posibilidades), pero no necesariamente todas las limitaciones de sus subconjuntos.
+
+<div align="center">
+  <img src="img/diagramas_respuestas_teoricas/listas_conjuntos_0.svg" width="70%">
+  <p>Diagrama de Euler de la relación entre lista, lista enlazada y lista doblemente enlazada.</p>
+</div>
+
+
+
+### 5.2 Explicar qué es una lista circular y de qué maneras se puede implementar.
+La `lista_circular` es una de las variantes de la `lista`, o sea, un subconjunto de `lista`. En esta se implementa una reestricción extra en relación al orden relativo de los extremos de la lista, estos deben tener ambos una posición anterior y posterior (o siguiente), especificamente la posición anterior a la primera posición debe ser la última posición, y la posición posterior de la última posición debe ser la primera posición.
+Una de las formas más intuitivas de implementar una `lista_circular` es tomando una lista simplemente enlazada y agregarle al último nodo una referencia al primero.
+También es posible implementar una lista circular sin necesidad de una lista enlazada, es decir, por medio de un bloque contiguo de memoria y usando una operación especial para calcular la posición siguiente, por ej POS_SIGUIENTE = (POS_ACTUAL + 1) % TAMAÑO_LISTA 
+
+<div align="center">
+  <img src="img/diagramas_respuestas_teoricas/diagrama_memoria_lista_simplemente_enlazada_circular_2.svg" width="70%">
+  <p>Diagrama de memoria de una lista circular simplemente enlazada.</p>
+</div>
+
+### 5.3 Explicar la diferencia de funcionamiento entre cola y pila.
+El motivo fue....
+
+### 5.4 Explicar la diferencia de funcionamiento entre cola y pila.
 El motivo fue....
